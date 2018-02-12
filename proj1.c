@@ -7,7 +7,13 @@
 int **board = NULL;//Couldn't get a triple pointer working :(
 int sizeX;//Bunch of globals, sorry
 int sizeY;
-char *fileName = "test.txt";
+char *fileName = "test.txt";//Hardcoded Filename O____O
+/**
+ *  Main Function
+ *  -------------
+ *  Initializes everything and then goes into a loop
+ *  for input. 
+ */
 int main(int argc, char *argv[]){
   if(argc>2){
     sizeX = atoi(argv[1]);
@@ -35,8 +41,8 @@ int main(int argc, char *argv[]){
   while(1){
     printf("What now?\n");
     printf("1.) Step\n");
-    printf("2.) Save FILENAME\n");
-    printf("3.) Load FILENAME\n");
+    printf("2.) Save\n");
+    printf("3.) Load\n");
     printf("4.) Quit\n");
     fgets(input,20,stdin);
     switch(input[0]){
@@ -60,6 +66,13 @@ int main(int argc, char *argv[]){
   return 0;
 }
 
+/*
+ *  makeBoard
+ *  ---------
+ *  Creates the board for the first time. Interacts
+ *  with a global array for now, couldn't figure out 
+ *  triple pointers. Uses malloc for memory management.
+ */
 int makeBoard(){
   int row = sizeX;
   int col = sizeY;
@@ -78,6 +91,13 @@ int makeBoard(){
   return 0;
 }
 
+/*
+ *  printBoard
+ *  ----------
+ *  Prints the board by just looping through
+ *  the 2d array using a nested for loop.
+ *  Chooses symobls based on value.
+ */
 int printBoard(){
   int i,j;
   char sym;
@@ -99,6 +119,15 @@ int printBoard(){
   return 0;
 }
 
+/*
+ *  stepBoard()
+ *  -----------
+ *  The real meat of the game logic.
+ *  Updates the entire game by going through
+ *  and counting neighbors for each index,
+ *  then marking for death/life based on
+ *  the findings, then finally updating.
+ */
 int stepBoard(){
   int marked[sizeX*sizeY];//marked for change
   int i,j;
@@ -147,6 +176,14 @@ int stepBoard(){
   return 0;
 }
 
+/*
+ *  clearBoard
+ *  -----------
+ *  Frees up the global array for now.
+ *  Can't use it in the middle of the function
+ *  because I don't use local vars, so I'm not sure
+ *  if I can init another global array after freeing.
+ */
 int clearBoard(){
   int i;
   for(i = 0;i<sizeX;i++){
@@ -156,6 +193,12 @@ int clearBoard(){
   return 0;
 }
 
+/*
+ *  newBaord
+ *  --------
+ *  Reallocs the memory for the global board.
+ *  Currently unused.
+ */
 int newBoard(){
   int i,j;
   board = (int **)realloc(board,sizeX * sizeof(int*));
@@ -171,6 +214,12 @@ int newBoard(){
   return 0;
 }
 
+/*
+ *  popBoard
+ *  --------
+ *  Populates the board based on a parsed string
+ *  of characters (for loading, etc.)
+ */
 int popBoard(char *mark){
   int i,j;
   for(i = 0;i<sizeX;i++){
@@ -182,6 +231,13 @@ int popBoard(char *mark){
   }
 }
 
+/*
+ *  loadBoard
+ *  ---------
+ *  Loads file using file_read and parses the data
+ *  in order to create a new board and populate it
+ *  based on the data given.
+ */
 int loadBoard(){
   char *buffer;
   int size = read_file(fileName,&buffer);
@@ -192,6 +248,8 @@ int loadBoard(){
     return -1;
   }
   //Parse Buffer
+  //There has GOT to be a better way to 
+  //parse through this XD
   //x
   sizeSX = 0;
   for(i = 0;i<size;i++){
@@ -239,6 +297,12 @@ int loadBoard(){
   free(mark);
 }
 
+/*
+ *  saveBoard
+ *  ----------
+ *  uses file_write to write the data in the specified
+ *  format to be parsed later by loadBoard.
+ */
 int saveBoard(){
   char *buffer;
   int i,j;
