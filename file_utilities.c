@@ -15,16 +15,15 @@ int main(int argc, char** argv){
 */
 //File Size Reading code gotten from: https://stackoverflow.com/questions/238603/how-can-i-get-a-files-size-in-c
 //Extra guidance provided by classmate: Sean Aubrey
-int read_file( char* filename, char **buffer ){
+int read_file( char* fileName, char **buffer ){
   FILE *in;
-  in = fopen(filename, "r");
+  in = fopen(fileName, "r");
   if(in == NULL){
     printf("File not found, shutting down...");
     exit(1);
   }
   fseek(in,0L,SEEK_END);
-  int size = ftell(in);
-  rewind(in);
+  int size = (int)ftell(in);
   *buffer = (char*) malloc(size*sizeof(char));
   fseek(in,0L,SEEK_SET);
   fread(*buffer,sizeof(char),size,in);
@@ -33,13 +32,14 @@ int read_file( char* filename, char **buffer ){
 }
 
 
-int write_file( char* filename, char *buffer, int size){
+int write_file( char *fileName, char *buffer, int size){
   FILE *out;
-  out = fopen(filename, "w");
+  out = fopen(fileName, "w");
   if(out == NULL){
     printf("File not working, shutting down...");
     exit(1);
   }
+  fwrite(buffer,sizeof(char),size,out);
   fclose(out);
   return 0;
 }
