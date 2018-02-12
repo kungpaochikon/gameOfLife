@@ -4,7 +4,7 @@
 #include <math.h>
 #include "file_utilities.h"
 
-int **board;//Couldn't get a triple pointer working :(
+int **board = NULL;//Couldn't get a triple pointer working :(
 int sizeX;//Bunch of globals, sorry
 int sizeY;
 char *fileName = "test.txt";
@@ -18,14 +18,16 @@ int main(int argc, char *argv[]){
     exit(1);
   }
   makeBoard();
-  board[5][5] = 1;
-  board[5][6] = 1;
-  board[5][7] = 1;
-  board[6][6] = 1;
-  board[0][0] = 1;
-  board[1][0] = 1;
-  board[1][1] = 1;
-  board[2][0] = 1;
+  if(sizeX>7 && sizeY>7){
+    board[5][5] = 1;
+    board[5][6] = 1;
+    board[5][7] = 1;
+    board[6][6] = 1;
+    board[0][0] = 1;
+    board[1][0] = 1;
+    board[1][1] = 1;
+    board[2][0] = 1;
+  }
   printBoard();
   //Input code from https://stackoverflow.com/questions/22065675/get-text-from-user-input-using-c
   char input[20];
@@ -228,7 +230,7 @@ int loadBoard(){
   for(i = 0;i<sizeX*sizeY;i++){
     printf("%c",mark[i]);
   }
-  newBoard();
+  makeBoard();
   popBoard(mark);
   printBoard();
   free(sY);
