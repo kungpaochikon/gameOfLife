@@ -14,7 +14,13 @@ int main(int argc, char** argv){
 }
 */
 //File Size Reading code gotten from: https://stackoverflow.com/questions/238603/how-can-i-get-a-files-size-in-c
-//Extra guidance provided by classmate: Sean Aubrey
+//Extra guidance(fread) provided by classmate: Sean Aubrey
+
+/*
+ *  read_file
+ *  ---------
+ *  Read File 
+ */
 int read_file( char* fileName, char **buffer ){
   FILE *in;
   in = fopen(fileName, "r");
@@ -31,7 +37,9 @@ int read_file( char* fileName, char **buffer ){
   return size;
 }
 
-
+//  write_file
+//  ----------
+//  Write file
 int write_file( char *fileName, char *buffer, int size){
   FILE *out;
   out = fopen(fileName, "w");
