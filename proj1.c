@@ -190,10 +190,8 @@ int stepBoard(int ***board,int sizeX, int sizeY){
 /*
  *  clearBoard
  *  -----------
- *  Frees up the global array for now.
- *  Can't use it in the middle of the function
- *  because I don't use local vars, so I'm not sure
- *  if I can init another global array after freeing.
+ *  Frees up the given board that was
+ *  previously malloc'd.
  */
 
 int clearBoard(int ***board,int sizeX){
