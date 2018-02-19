@@ -64,7 +64,7 @@ int main(int argc, char *argv[]){
 	break;
       case '5':
 	printf("Shutting Down...\n");
-	clearBoard(&board);
+	clearBoard(&board,sizeX);
 	exit(1);
 	break;
     }
@@ -123,6 +123,7 @@ int printBoard(int **board,int sizeX,int sizeY){
     }
     printf("\n");
   }
+  printf("::::SIZEX-%i\n",sizeX);
   return 0;
 }
 
@@ -261,6 +262,7 @@ int popBoard(int ***board,int sizeX,int sizeY, char *mark){
 
 
 int loadBoard(int ***board,int *sizeX, int *sizeY, char *fileName){
+  clearBoard(board,*sizeX);
   char *buffer;
   int size = read_file(fileName,&buffer);
   char *sX,*sY;
@@ -315,7 +317,6 @@ int loadBoard(int ***board,int *sizeX, int *sizeY, char *fileName){
   printf("\n---)%i\n",*sizeX);
   printf("---)%i\n",*sizeY);
   printf("--)%s\n",sX);
-  //clearBoard(board,*sizeX);
   makeBoard(board,*sizeX,*sizeY);
   popBoard(board,*sizeX,*sizeY,mark);
   printBoard(*board,*sizeX,*sizeY);
