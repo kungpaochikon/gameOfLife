@@ -123,7 +123,6 @@ int printBoard(int **board,int sizeX,int sizeY){
     }
     printf("\n");
   }
-  printf("::::SIZEX-%i\n",sizeX);
   return 0;
 }
 
@@ -199,7 +198,6 @@ int stepBoard(int ***board,int sizeX, int sizeY){
 
 int clearBoard(int ***board,int sizeX){
   int i;
-  printf("sizeX: %i\n",sizeX);
   for(i = 0;i<sizeX;i++){
     free((*board)[i]);
   }
@@ -288,7 +286,6 @@ int loadBoard(int ***board,int *sizeX, int *sizeY, char *fileName){
   }
   sX[i] = '\0';
   *sizeX = atoi(sX);
-  printf("SizeX: %i\n",*sizeX);
   //y
   sizeSY = 0;
   for(i = sizeSX+1;i<size;i++){
@@ -303,23 +300,21 @@ int loadBoard(int ***board,int *sizeX, int *sizeY, char *fileName){
   }
   sY[i] = '\0';
   *sizeY = atoi(sY);
-  printf("sizeY: %i\n",*sizeY);
   
   char *mark;
   mark = (char *)malloc(*sizeX * *sizeY * sizeof(char));
   for(i = 0;i<*sizeX * *sizeY;i++){
     mark[i] = buffer[sizeSX+sizeSY+2+i];
   }
-  printf("\n");
-  for(i = 0;i<*sizeX * *sizeY;i++){
-    printf("%c",mark[i]);
-  }
-  printf("\n---)%i\n",*sizeX);
-  printf("---)%i\n",*sizeY);
-  printf("--)%s\n",sX);
+  //printf("\n");
+  //for(i = 0;i<*sizeX * *sizeY;i++){
+  //  printf("%c",mark[i]);
+  //}
+  //Make new board with loaded data
   makeBoard(board,*sizeX,*sizeY);
   popBoard(board,*sizeX,*sizeY,mark);
   printBoard(*board,*sizeX,*sizeY);
+  //Free helpers
   free(sY);
   free(sX);
   free(buffer);
@@ -366,7 +361,7 @@ int saveBoard(int **board, int sizeX, int sizeY, char *fileName){
     }
   }
   for(i = 0;i<size;i++){
-    printf("%c",buffer[i]);
+    //printf("%c",buffer[i]);
   }
   write_file(fileName,buffer,size);
   //printBoard(board,sizeX,sizeY);
